@@ -1,8 +1,7 @@
 ﻿using System.Data;
 using System.Text;
+using System.Text.Json;
 using Microsoft.VisualBasic.Devices;
-
-using Newtonsoft.Json;
 
 namespace AnthropicApp
 {
@@ -494,7 +493,7 @@ namespace AnthropicApp
     {
         public static string GenerateToolJson(Tool tool)
         {
-            return JsonConvert.SerializeObject(tool, Formatting.Indented);
+            return JsonSerializer.Serialize(tool, new JsonSerializerOptions { WriteIndented = true });
         }
 
         public static string GenerateToolString(Tool tool)
@@ -542,16 +541,16 @@ namespace AnthropicApp
                 sb.AppendLine($"                \"{prop.Key}\", new");
                 sb.AppendLine($"                {{");
 
-                var propDict = JsonConvert.DeserializeObject<Dictionary<string, object>>(
-                    JsonConvert.SerializeObject(prop.Value));
+                var propDict = JsonSerializer.Deserialize<Dictionary<string, object>>(
+                    JsonSerializer.Serialize(prop.Value));
 
                 foreach (var detail in propDict)
                 {
-                    if (detail.Value is Newtonsoft.Json.Linq.JObject)
+                    if (detail.Value is System.Text.Json.JsonElement jsonElement && jsonElement.ValueKind == JsonValueKind.Object)
                     {
                         sb.AppendLine($"                    {detail.Key} = new");
                         sb.AppendLine($"                    {{");
-                        var nestedProps = JsonConvert.DeserializeObject<Dictionary<string, object>>(
+                        var nestedProps = JsonSerializer.Deserialize<Dictionary<string, object>>(
                             detail.Value.ToString());
                         foreach (var nested in nestedProps)
                         {
