@@ -9,34 +9,38 @@ namespace AnthropicApp
     /// </summary>
     public class UniversalToolBuilder
     {
-        private readonly UniversalToolDefinition _definition;
-
-        public UniversalToolBuilder()
-        {
-            _definition = new UniversalToolDefinition(null);
-        }
+        private string _name;
+        private string _description;
+        private List<string> _keywords = new();
+        private List<string> _constraints = new();
+        private string _instructionHeader;
+        private List<string> _instructions = new();
+        private Dictionary<string, UniversalProperty> _properties = new();
+        private List<string> _requiredFields = new();
+        private bool _strict = false;
+        private bool _additionalProperties = false;
 
         public UniversalToolBuilder AddToolName(string name)
         {
-            _definition.Name = name ?? throw new ArgumentException("Tool name cannot be null.");
+            _name = name ?? throw new ArgumentException("Tool name cannot be null.");
             return this;
         }
 
         public UniversalToolBuilder AddDescription(string description)
         {
-            _definition.Description = description;
+            _description = description;
             return this;
         }
 
         public UniversalToolBuilder SetStrict(bool strict = false)
         {
-            _definition.Strict = strict;
+            _strict = strict;
             return this;
         }
 
         public UniversalToolBuilder SetAdditionalProperties(bool allowAdditional)
         {
-            _definition.AdditionalProperties = allowAdditional;
+            _additionalProperties = allowAdditional;
             return this;
         }
 
@@ -48,7 +52,7 @@ namespace AnthropicApp
                 {
                     if (!string.IsNullOrEmpty(constraint))
                     {
-                        _definition.Constraints.Add(constraint);
+                        _constraints.Add(constraint);
                     }
                 }
             }
@@ -63,7 +67,7 @@ namespace AnthropicApp
                 {
                     if (!string.IsNullOrEmpty(keyword))
                     {
-                        _definition.Keywords.Add(keyword);
+                        _keywords.Add(keyword);
                     }
                 }
             }
@@ -74,7 +78,7 @@ namespace AnthropicApp
         {
             if (!string.IsNullOrEmpty(instructionHeader))
             {
-                _definition.InstructionHeader = instructionHeader;
+                _instructionHeader = instructionHeader;
             }
             return this;
         }
@@ -83,7 +87,7 @@ namespace AnthropicApp
         {
             if (!string.IsNullOrEmpty(instruction))
             {
-                _definition.Instructions.Add(instruction);
+                _instructions.Add(instruction);
             }
             return this;
         }
@@ -105,11 +109,11 @@ namespace AnthropicApp
                 Items = items
             };
 
-            _definition.Properties[fieldName] = property;
+            _properties[fieldName] = property;
 
             if (isRequired)
             {
-                _definition.RequiredFields.Add(fieldName);
+                _requiredFields.Add(fieldName);
             }
 
             return this;
@@ -117,22 +121,35 @@ namespace AnthropicApp
 
         internal void SetNestedObject(string objectName, UniversalProperty property, bool isRequired)
         {
-            _definition.Properties[objectName] = property;
+            _properties[objectName] = property;
 
             if (isRequired)
             {
-                _definition.RequiredFields.Add(objectName);
+                _requiredFields.Add(objectName);
             }
         }
 
         public UniversalToolDefinition Build()
         {
-            if (string.IsNullOrWhiteSpace(_definition.Name))
+            if (string.IsNullOrWhiteSpace(_name))
             {
                 throw new InvalidOperationException("Tool name must be set before building.");
             }
 
-            return _definition;
+            var definition = new UniversalToolDefinition(_name)
+            {
+                Description = _description,
+                Keywords = _keywords,
+                Constraints = _constraints,
+                InstructionHeader = _instructionHeader,
+                Instructions = _instructions,
+                Properties = _properties,
+                RequiredFields = _requiredFields,
+                Strict = _strict,
+                AdditionalProperties = _additionalProperties
+            };
+
+            return definition;
         }
     }
 
