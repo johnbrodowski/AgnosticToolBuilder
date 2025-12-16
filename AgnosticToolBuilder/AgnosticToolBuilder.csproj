@@ -1,9 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+    <!-- Package Information -->
+    <PackageId>AgnosticToolBuilder</PackageId>
+    <Version>1.0.0</Version>
+    <Authors>John Brodowski</Authors>
+    <Company>John Brodowski</Company>
+    <Product>AgnosticToolBuilder</Product>
+    <Description>A lightweight, provider-agnostic tool builder for AI/LLM function calling. Define tools once using a fluent API and convert to any provider format (Anthropic, OpenAI, Gemini, Groq, LMStudio). Features nested object support, rich metadata (keywords, constraints, instructions), and zero dependencies beyond System.Text.Json.</Description>
+    <PackageTags>AI;LLM;FunctionCalling;Anthropic;OpenAI;Gemini;Groq;LMStudio;ToolBuilder;FluentAPI</PackageTags>
+    <PackageProjectUrl>https://github.com/johnbrodowski/AgnosticToolBuilder</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/johnbrodowski/AgnosticToolBuilder</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Copyright>Copyright (c) 2024 John Brodowski</Copyright>
+
+    <!-- Build Properties -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
 </Project>
