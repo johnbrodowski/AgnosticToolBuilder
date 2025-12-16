@@ -1,6 +1,5 @@
 ﻿using System.Text;
-
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace AnthropicApp
 {
@@ -365,12 +364,12 @@ namespace AnthropicApp
     {
         public static string GenerateToolJson(GroqClient.ToolGroq tool)
         {
-            var settings = new JsonSerializerSettings
+            var options = new JsonSerializerOptions
             {
-                NullValueHandling = NullValueHandling.Ignore,
-                Formatting = Formatting.Indented
+                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
+                WriteIndented = true
             };
-            return JsonConvert.SerializeObject(tool, settings);
+            return JsonSerializer.Serialize(tool, options);
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿//using Newtonsoft.Json;
-//[JsonProperty("type")]
-
-
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace AnthropicApp
 {

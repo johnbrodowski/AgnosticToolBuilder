@@ -1,6 +1,5 @@
-﻿using Newtonsoft.Json;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace AnthropicApp
 {
@@ -8,22 +7,24 @@ namespace AnthropicApp
 
     public class Tool
     {
-        [JsonProperty("name")]
+        [JsonPropertyName("name")]
         public string name { get; set; }
 
-        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("description")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string? description { get; set; }
 
-        [JsonProperty("input_schema")]
+        [JsonPropertyName("input_schema")]
         public InputSchema input_schema { get; set; }
 
         // This 'type' is for the tool definition, e.g., "custom" or "web_search_20250305"
         // It should always be serialized for Anthropic tools.
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public string ToolDefinitionType { get; set; }
-         
+ 
 
-        [JsonProperty("cache_control", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonPropertyName("cache_control")]
+        [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public CacheControl? cache_control { get; set; }
  
 
