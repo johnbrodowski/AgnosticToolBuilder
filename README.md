@@ -1,4 +1,8 @@
-# AgnosticToolBuilder
+# About this code
+This example was extracted from AGPA — my fully autonomous general-purpose agent (closed-source, ~150k LOC).
+
+## AgnosticToolBuilder
+ 
 
 A provider-agnostic tool builder for AI/LLM function calling that lets you define tools once and use them across multiple AI providers (Anthropic, OpenAI, Gemini, Groq, LMStudio).
 
