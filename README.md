@@ -1,10 +1,11 @@
 # About this code
-This example was extracted from AGPA — my fully autonomous general-purpose agent (closed-source, ~150k LOC).
+About this code
+
+This example was extracted from AGPA — a fully autonomous general-purpose agent (closed-source, ~150k LOC).
 
 ## AgnosticToolBuilder
  
-
-A provider-agnostic tool builder for AI/LLM function calling that lets you define tools once and use them across multiple AI providers (Anthropic, OpenAI, Gemini, Groq, LMStudio).
+AgnosticToolBuilder is a provider-agnostic tool builder for AI/LLM function calling. It consists of a few simple classes you can integrate directly into your project. Define tools once and use them across multiple AI providers (Anthropic, OpenAI, Gemini, Groq, LMStudio).
 
 ## Features
 
